@@ -23,8 +23,8 @@ pipeline {
         stage("Build"){
             steps{
                 sh "npm run build"
-                echo "the build tag is: "
-                echo env.BUILD_TAG
+                echo "the build id is: "
+                echo env.BUILD_ID
             }
         }
         
@@ -41,7 +41,7 @@ pipeline {
             steps{
                 script{
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        docker.image("shabbirhythm/angular-demo-app:${env.BUILD_TAG}").push()
+                        docker.image("shabbirhythm/angular-demo-app:${env.BUILD_ID}").push()
                         // docker.image("shabbirhythm/angular-demo-app:${env.BUILD_TAG}").push('latest')
                     }
                 } 
