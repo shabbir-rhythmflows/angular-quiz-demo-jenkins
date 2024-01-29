@@ -31,7 +31,7 @@ pipeline {
         stage("Build Docker Image") {
             steps {
                 script {
-                    imageName = "shabbirhythm/angular-demo-app:$env.BUILD_TAG"
+                    imageName = "shabbirhythm/angular-demo-app:$env.BUILD_ID"
                     docker.build(imageName)
                 }
             }
