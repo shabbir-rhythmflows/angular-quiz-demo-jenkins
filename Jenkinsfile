@@ -4,6 +4,10 @@ pipeline {
             image 'node:latest'
         }
     }
+    environment{
+		dockerHome = tool 'shabbirDocker'
+		PATH = "$dockerHome/bin:$PATH"
+	}
 	stages{
         stage("Install"){
             steps{
