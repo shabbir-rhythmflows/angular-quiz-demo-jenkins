@@ -22,6 +22,25 @@ pipeline {
                 sh "npm run build"
             }
         }
+        
+        stage("Build Docker Image") {
+            steps {
+                script {
+                    imageName = "shabbirhythm/angular-demo-app:${env.BUILD_TAG.replaceAll("[^a-zA-Z0-9_.-]", "_")}"
+                    docker.build(imageName)
+                }
+            }
+        }
+
+        stage("Push Docker Image"){
+            steps{
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        docker.image("shabbirhythm/angular-demo-app:${env.BUILD_TAG}").push()
+                        // docker.image("shabbirhythm/angular-demo-app:${env.BUILD_TAG}").push('latest')
+                    }
+                } 
+            }
 	}
 	post{
 		always {
