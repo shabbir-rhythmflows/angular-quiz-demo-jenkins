@@ -1,5 +1,9 @@
 pipeline {
 	agent any
+    environment{
+		nodejsHome = tool 'shabbirNodejs'
+		PATH = "$nodejsHome/bin:$PATH"
+	}
 	stages{
         stage("Checkout"){
             steps{
