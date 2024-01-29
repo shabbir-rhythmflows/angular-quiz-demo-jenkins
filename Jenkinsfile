@@ -23,13 +23,15 @@ pipeline {
         stage("Build"){
             steps{
                 sh "npm run build"
+                echo "the build tag is: "
+                echo env.BUILD_TAG
             }
         }
         
         stage("Build Docker Image") {
             steps {
                 script {
-                    imageName = "shabbirhythm/angular-demo-app:${env.BUILD_TAG.replaceAll("[^a-zA-Z0-9_.-]", "_")}"
+                    imageName = "shabbirhythm/angular-demo-app:$env.BUILD_TAG"
                     docker.build(imageName)
                 }
             }
