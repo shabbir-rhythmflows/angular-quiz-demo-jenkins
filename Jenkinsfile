@@ -2,7 +2,9 @@ pipeline {
 	agent any 
     environment{
 		dockerHome = tool 'shabbirDocker'
-		PATH = "$dockerHome/bin:$PATH"
+        nodejs = tool  'shabbirNodejs'
+		PATH = "$dockerHome/bin:$nodejs/bin:$PATH"
+        
 	}
 	stages{
         stage("Install"){
