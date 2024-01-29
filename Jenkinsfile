@@ -1,31 +1,26 @@
 pipeline {
-	agent any
-    environment{
-		nodejsHome = tool 'shabbirNodejs'
-		PATH = "$nodejsHome/bin:$PATH"
-	}
+	agent {
+        docker{
+            image 'node:latest'
+        }
+    }
 	stages{
-        stage("Checkout"){
+        stage("Install"){
             steps{
-                echo "I am the checkout stage"
+                sh "npm --version"
+                sh "npm install"
             }
         }
-		stage("Build & Compile"){
-			steps{
-                sh "npm i"
+        stage("Test"){
+            steps{
+                sh "npm test"
+            }
+        }
+        stage("Build"){
+            steps{
                 sh "npm build"
-			}
-		}
-		stage("Testing"){
-			steps{
-				echo "npm test"
-			}
-		}
-		stage("Integration Test"){
-			steps{
-				echo "integration lol"
-			}
-		}
+            }
+        }
 	}
 	post{
 		always {
