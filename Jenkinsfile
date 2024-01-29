@@ -1,9 +1,5 @@
 pipeline {
-	agent {
-        docker{
-            image 'node:latest'
-        }
-    }
+	agent any 
     environment{
 		dockerHome = tool 'shabbirDocker'
 		PATH = "$dockerHome/bin:$PATH"
@@ -12,7 +8,8 @@ pipeline {
         stage("Install"){
             steps{
                 sh "npm --version"
-                sh "npm install"
+                sh "docker --version"
+                // sh "npm install"
             }
         }
         stage("Test"){
